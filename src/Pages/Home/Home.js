@@ -4,6 +4,7 @@ import NewsCard from '../../Shared/NewsCard/NewsCard';
 
 const Home = () => {
     const allNews = useLoaderData();
+    
     return (
         <div>
             {
