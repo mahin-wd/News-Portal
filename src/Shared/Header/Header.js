@@ -4,12 +4,17 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import { FaAlignRight, FaCaretRight, FaPowerOff, FaUser } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../Contexts/auth/AuthProvider';
 import LeftNav from '../LeftNav/LeftNav';
 
 const Header = () => {
-  const {user} = useContext(AuthContext)
+  const {user, logOut} = useContext(AuthContext);
+
+  const handleLogeOut = () => {
+    logOut();
+  }
 
     return (
 <Navbar className='mb-5' collapseOnSelect expand="lg" bg="light" variant="light">
@@ -34,11 +39,28 @@ const Header = () => {
           </Nav>
           <Nav>
             <Nav.Link href="#deets">{user?.displayName}</Nav.Link>
-            <Image className='mt-2'
-            style={{height: '30px'}}
-            roundedCircle
-            src={user?.photoURL}
-            ></Image>
+            {
+              user?.photoURL ? 
+              <Image className='mt-2'
+              style={{height: '30px'}}
+              roundedCircle
+              src={user?.photoURL}
+              ></Image>
+              
+              :
+              
+              <FaUser></FaUser>
+            }
+            <div className='mt-2 ms-3' onClick={handleLogeOut}>
+              {
+                user?.uid ?
+                <FaPowerOff></FaPowerOff>
+                :
+                <FaCaretRight className='d-none'></FaCaretRight>
+              }
+            </div>
+            <Link>
+            </Link>
           </Nav>
           <div className='d-lg-none'>
             <LeftNav></LeftNav>
