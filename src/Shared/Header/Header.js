@@ -4,10 +4,11 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import { FaAlignRight, FaCaretRight, FaPowerOff, FaUser } from 'react-icons/fa';
+import { FaUser } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../Contexts/auth/AuthProvider';
 import LeftNav from '../LeftNav/LeftNav';
+import './Header.css'
 
 const Header = () => {
   const {user, logOut} = useContext(AuthContext);
@@ -19,26 +20,13 @@ const Header = () => {
     return (
 <Navbar className='mb-5' collapseOnSelect expand="lg" bg="light" variant="light">
       <Container>
-        <Navbar.Brand><Link to="/">News Portal</Link> </Navbar.Brand>
+        <Navbar.Brand><Link className='header-text' to="/">News Portal</Link> </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="#features">Features</Nav.Link>
-            <Nav.Link href="#pricing">Pricing</Nav.Link>
-            <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Separated link
-              </NavDropdown.Item>
-            </NavDropdown>
           </Nav>
           <Nav>
-            <Nav.Link href="#deets">{user?.displayName}</Nav.Link>
+            <Nav className='mt-2 me-3' href="#deets">{user?.displayName}</Nav>
             {
               user?.photoURL ? 
               <Image className='mt-2'
@@ -51,16 +39,24 @@ const Header = () => {
               
               <FaUser></FaUser>
             }
-            <div className='mt-2 ms-3' onClick={handleLogeOut}>
+            <NavDropdown id="collasible-nav-dropdown">
               {
-                user?.uid ?
-                <FaPowerOff></FaPowerOff>
+                user?.email ? 
+                  <NavDropdown.Item>
+                    <Link onClick={handleLogeOut} className='login'>Log Out</Link>
+                  </NavDropdown.Item>
                 :
-                <FaCaretRight className='d-none'></FaCaretRight>
+                <>
+                  <NavDropdown.Item>
+                  <Link to="/login" className='login'>Log In</Link>
+                  </NavDropdown.Item>
+                  <NavDropdown.Item>
+                  <Link to="signin" className='signin'>Sign In</Link>
+                </NavDropdown.Item>
+                </>
               }
-            </div>
-            <Link>
-            </Link>
+              
+            </NavDropdown>
           </Nav>
           <div className='d-lg-none'>
             <LeftNav></LeftNav>
